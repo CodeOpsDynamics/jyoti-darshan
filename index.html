@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmic AI - Your Personal AI Astrologer</title>
+    <title>Jyoti Darshan - AI-Powered Astrology Platform</title>
     <style>
         * {
             margin: 0;
@@ -25,41 +25,43 @@
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
-            margin-bottom: 30px;
         }
 
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px;
+            padding: 50px 40px;
             text-align: center;
             color: white;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 3em;
             margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
         }
 
         .nav-tabs {
             display: flex;
             background: #f8f9fa;
             padding: 0;
-            overflow-x: auto;
         }
 
         .tab {
             flex: 1;
-            padding: 18px 10px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             border: none;
             background: transparent;
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 600;
             color: #666;
             transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-            white-space: nowrap;
+            border-bottom: 4px solid transparent;
         }
 
         .tab:hover {
@@ -75,51 +77,23 @@
         .tab-content {
             display: none;
             padding: 40px;
+            min-height: 500px;
         }
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section h2 {
             color: #667eea;
             margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .upload-area {
-            border: 3px dashed #667eea;
-            border-radius: 20px;
-            padding: 60px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #f8f9fa;
-        }
-
-        .upload-area:hover {
-            background: #e9ecef;
-            border-color: #764ba2;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .preview-container {
-            margin-top: 30px;
-            display: none;
-        }
-
-        .preview-container.active {
-            display: block;
-        }
-
-        #imagePreview {
-            max-width: 100%;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            font-size: 2em;
         }
 
         .form-group {
@@ -131,6 +105,7 @@
             color: #333;
             font-weight: 600;
             margin-bottom: 10px;
+            font-size: 1.05em;
         }
 
         .form-group input,
@@ -141,12 +116,12 @@
             border: 2px solid #e0e0e0;
             border-radius: 12px;
             font-size: 1em;
-            transition: border 0.3s;
+            transition: all 0.3s;
             font-family: inherit;
         }
 
         .form-group textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
 
@@ -155,6 +130,7 @@
         .form-group textarea:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .btn {
@@ -176,18 +152,24 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
         }
 
+        .btn:active {
+            transform: translateY(0);
+        }
+
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
 
         .result-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 35px;
             border-radius: 20px;
             margin-top: 30px;
             display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .result-box.active {
@@ -206,9 +188,14 @@
             }
         }
 
+        .result-box h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 50px;
             display: none;
         }
 
@@ -217,11 +204,11 @@
         }
 
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
@@ -234,18 +221,31 @@
         .chat-container {
             background: #f8f9fa;
             border-radius: 20px;
-            padding: 20px;
-            height: 400px;
+            padding: 25px;
+            height: 450px;
             overflow-y: auto;
             margin-bottom: 20px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .chat-message {
-            margin-bottom: 15px;
-            padding: 12px 18px;
+            margin-bottom: 18px;
+            padding: 14px 20px;
             border-radius: 18px;
-            max-width: 80%;
+            max-width: 85%;
             line-height: 1.6;
+            animation: messageSlide 0.3s;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-message {
@@ -258,28 +258,31 @@
         .ai-message {
             background: white;
             color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .chat-input-container {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: flex-end;
         }
 
         .chat-input-container textarea {
             flex: 1;
-            min-height: 50px;
-            max-height: 120px;
+            min-height: 55px;
+            max-height: 150px;
+            resize: none;
         }
 
         .chat-input-container button {
             width: auto;
-            padding: 15px 30px;
+            padding: 15px 35px;
+            white-space: nowrap;
         }
 
         .info-box {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             margin-top: 30px;
             border-left: 5px solid #667eea;
@@ -287,27 +290,32 @@
 
         .info-box h4 {
             color: #667eea;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
         }
 
-        .trait {
-            background: rgba(255,255,255,0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-
-        .zodiac-sign {
-            font-size: 5em;
-            text-align: center;
-            margin: 20px 0;
+        .info-box p {
+            color: #666;
+            line-height: 1.7;
         }
 
         .planet-card {
             background: rgba(255,255,255,0.2);
-            padding: 20px;
+            padding: 22px;
             border-radius: 15px;
             margin: 15px 0;
+        }
+
+        .planet-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .zodiac-sign {
+            font-size: 6em;
+            text-align: center;
+            margin: 25px 0;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -316,12 +324,16 @@
             }
             
             .tab-content {
-                padding: 20px;
+                padding: 25px;
             }
 
             .tab {
-                font-size: 0.85em;
-                padding: 15px 8px;
+                font-size: 0.9em;
+                padding: 15px 10px;
+            }
+
+            .chat-container {
+                height: 350px;
             }
         }
     </style>
@@ -329,55 +341,21 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌟 Cosmic AI</h1>
-            <p>Your Personal AI-Powered Astrologer</p>
+            <h1>🌟 Jyoti Darshan</h1>
+            <p>ज्योति दर्शन - Vision of Cosmic Light</p>
         </div>
 
         <div class="nav-tabs">
-            <button class="tab active" onclick="switchTab(0)">📸 Face Reading</button>
-            <button class="tab" onclick="switchTab(1)">🔮 Birth Chart</button>
-            <button class="tab" onclick="switchTab(2)">💬 AI Chat</button>
-            <button class="tab" onclick="switchTab(3)">📅 Daily</button>
-        </div>
-
-        <!-- FACE READING TAB -->
-        <div class="tab-content active" data-tab="0">
-            <div class="section">
-                <h2>📸 Face Reading Analysis</h2>
-                <p style="color: #666; margin-bottom: 20px;">Upload your photo for AI personality insights</p>
-                
-                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                    <div style="font-size: 4em; margin-bottom: 20px;">📸</div>
-                    <p style="font-size: 1.2em; color: #667eea; font-weight: 600;">Click to upload photo</p>
-                    <p style="color: #999; margin-top: 10px;">Supports: JPG, PNG</p>
-                </div>
-                
-                <input type="file" id="fileInput" accept="image/*">
-
-                <div class="preview-container" id="previewContainer">
-                    <img id="imagePreview" alt="Preview">
-                    <button class="btn" onclick="analyzeImage()">✨ Analyze My Cosmic Profile</button>
-                </div>
-
-                <div class="loading" id="faceLoading">
-                    <div class="spinner"></div>
-                    <p style="color: #667eea; font-weight: 600;">AI analyzing your cosmic energy...</p>
-                </div>
-
-                <div class="result-box" id="faceResult"></div>
-            </div>
-
-            <div class="info-box">
-                <h4>🔮 How It Works</h4>
-                <p>AI analyzes facial features to generate personality insights based on astrological principles. For entertainment purposes.</p>
-            </div>
+            <button class="tab active" onclick="switchTab(0)">🔮 Birth Chart</button>
+            <button class="tab" onclick="switchTab(1)">💬 AI Astrologer</button>
+            <button class="tab" onclick="switchTab(2)">📅 Daily Guidance</button>
         </div>
 
         <!-- BIRTH CHART TAB -->
-        <div class="tab-content" data-tab="1">
+        <div class="tab-content active" data-tab="0">
             <div class="section">
-                <h2>🔮 Birth Chart Generator</h2>
-                <p style="color: #666; margin-bottom: 30px;">Enter your birth details for cosmic insights</p>
+                <h2>🔮 Your Cosmic Blueprint</h2>
+                <p style="color: #666; margin-bottom: 30px; font-size: 1.05em;">Enter your birth details to reveal your astrological profile and receive AI-powered insights</p>
                 
                 <form id="birthForm" onsubmit="generateChart(event)">
                     <div class="form-group">
@@ -392,97 +370,97 @@
 
                     <div class="form-group">
                         <label>📍 Place of Birth</label>
-                        <input type="text" id="birthPlace" placeholder="City, Country" required>
+                        <input type="text" id="birthPlace" placeholder="e.g., Mumbai, India" required>
                     </div>
 
-                    <button type="submit" class="btn">✨ Generate Birth Chart</button>
+                    <button type="submit" class="btn">✨ Generate My Birth Chart</button>
                 </form>
 
                 <div class="loading" id="chartLoading">
                     <div class="spinner"></div>
-                    <p style="color: #667eea; font-weight: 600;">Calculating your cosmic blueprint...</p>
+                    <p style="color: #667eea; font-weight: 600; font-size: 1.1em;">Calculating your cosmic blueprint...</p>
                 </div>
 
                 <div class="result-box" id="chartResult"></div>
             </div>
 
             <div class="info-box">
-                <h4>🌙 About Birth Charts</h4>
-                <p>Your birth chart reveals planetary positions at your exact moment of birth and their influence on your life path.</p>
+                <h4>🌙 Understanding Your Birth Chart</h4>
+                <p>Your birth chart is a celestial snapshot of the sky at your exact moment of birth. It reveals the positions of planets and their influence on your personality, relationships, and life path. AI analyzes these positions to provide personalized insights.</p>
             </div>
         </div>
 
         <!-- AI CHATBOT TAB -->
-        <div class="tab-content" data-tab="2">
+        <div class="tab-content" data-tab="1">
             <div class="section">
                 <h2>💬 Ask Your AI Astrologer</h2>
-                <p style="color: #666; margin-bottom: 20px;">Get instant answers to your cosmic questions</p>
+                <p style="color: #666; margin-bottom: 25px; font-size: 1.05em;">Get instant cosmic guidance on love, career, life decisions, and more</p>
                 
                 <div class="chat-container" id="chatContainer">
                     <div class="chat-message ai-message">
-                        👋 Hello! I'm your AI astrologer. Ask me anything about your future, relationships, career, or life path. I'm here to guide you! ✨
+                        🙏 Namaste! I'm your AI astrologer. Ask me anything about your cosmic journey - relationships, career path, life purpose, or daily guidance. I'm here to illuminate your path! ✨
                     </div>
                 </div>
 
                 <div class="chat-input-container">
                     <textarea 
                         id="chatInput" 
-                        placeholder="Ask your question... (e.g., 'What does my Aries sun mean?' or 'Will I find love this year?')"
+                        placeholder="Ask your question... (e.g., 'What does my Leo sun mean?' or 'Should I start a new business?')"
                         onkeypress="handleChatKeypress(event)"
                     ></textarea>
                     <button class="btn" onclick="sendChatMessage()" id="sendBtn">Send</button>
                 </div>
 
-                <div class="loading" id="chatLoading">
+                <div class="loading" id="chatLoading" style="padding: 30px;">
                     <div class="spinner"></div>
-                    <p style="color: #667eea; font-weight: 600;">AI is consulting the stars...</p>
+                    <p style="color: #667eea; font-weight: 600;">Consulting the cosmic wisdom...</p>
                 </div>
             </div>
 
             <div class="info-box">
-                <h4>💡 Tips for Better Answers</h4>
-                <p>Be specific! Include your sun sign, birth details, or context about your situation for more personalized guidance.</p>
+                <h4>💡 How to Get Better Insights</h4>
+                <p>Be specific! Include your zodiac sign, birth details, or context about your situation. The more detail you provide, the more personalized and relevant your cosmic guidance will be.</p>
             </div>
         </div>
 
         <!-- DAILY HOROSCOPE TAB -->
-        <div class="tab-content" data-tab="3">
+        <div class="tab-content" data-tab="2">
             <div class="section">
-                <h2>📅 Daily Cosmic Forecast</h2>
-                <p style="color: #666; margin-bottom: 30px;">Get your personalized daily guidance</p>
+                <h2>📅 Today's Cosmic Forecast</h2>
+                <p style="color: #666; margin-bottom: 30px; font-size: 1.05em;">Receive personalized guidance aligned with today's planetary energies</p>
                 
                 <div class="form-group">
-                    <label>Your Zodiac Sign</label>
+                    <label>Select Your Zodiac Sign</label>
                     <select id="dailySign">
-                        <option value="">Select your sign...</option>
-                        <option value="Aries">♈ Aries (Mar 21 - Apr 19)</option>
-                        <option value="Taurus">♉ Taurus (Apr 20 - May 20)</option>
-                        <option value="Gemini">♊ Gemini (May 21 - Jun 20)</option>
-                        <option value="Cancer">♋ Cancer (Jun 21 - Jul 22)</option>
-                        <option value="Leo">♌ Leo (Jul 23 - Aug 22)</option>
-                        <option value="Virgo">♍ Virgo (Aug 23 - Sep 22)</option>
-                        <option value="Libra">♎ Libra (Sep 23 - Oct 22)</option>
-                        <option value="Scorpio">♏ Scorpio (Oct 23 - Nov 21)</option>
-                        <option value="Sagittarius">♐ Sagittarius (Nov 22 - Dec 21)</option>
-                        <option value="Capricorn">♑ Capricorn (Dec 22 - Jan 19)</option>
-                        <option value="Aquarius">♒ Aquarius (Jan 20 - Feb 18)</option>
-                        <option value="Pisces">♓ Pisces (Feb 19 - Mar 20)</option>
+                        <option value="">Choose your sign...</option>
+                        <option value="Aries">♈ Aries (March 21 - April 19)</option>
+                        <option value="Taurus">♉ Taurus (April 20 - May 20)</option>
+                        <option value="Gemini">♊ Gemini (May 21 - June 20)</option>
+                        <option value="Cancer">♋ Cancer (June 21 - July 22)</option>
+                        <option value="Leo">♌ Leo (July 23 - August 22)</option>
+                        <option value="Virgo">♍ Virgo (August 23 - September 22)</option>
+                        <option value="Libra">♎ Libra (September 23 - October 22)</option>
+                        <option value="Scorpio">♏ Scorpio (October 23 - November 21)</option>
+                        <option value="Sagittarius">♐ Sagittarius (November 22 - December 21)</option>
+                        <option value="Capricorn">♑ Capricorn (December 22 - January 19)</option>
+                        <option value="Aquarius">♒ Aquarius (January 20 - February 18)</option>
+                        <option value="Pisces">♓ Pisces (February 19 - March 20)</option>
                     </select>
                 </div>
 
-                <button class="btn" onclick="getDailyHoroscope()">✨ Get Today's Reading</button>
+                <button class="btn" onclick="getDailyHoroscope()">✨ Reveal Today's Guidance</button>
 
                 <div class="loading" id="dailyLoading">
                     <div class="spinner"></div>
-                    <p style="color: #667eea; font-weight: 600;">Reading today's cosmic energies...</p>
+                    <p style="color: #667eea; font-weight: 600; font-size: 1.1em;">Reading today's cosmic energies...</p>
                 </div>
 
                 <div class="result-box" id="dailyResult"></div>
             </div>
 
             <div class="info-box">
-                <h4>⭐ Daily Guidance</h4>
-                <p>Your personalized horoscope combines current planetary transits with your zodiac sign's unique energy.</p>
+                <h4>⭐ Your Daily Cosmic Guide</h4>
+                <p>Your personalized horoscope combines current planetary transits with your zodiac sign's unique energy. Check back daily for fresh insights aligned with the ever-changing cosmic dance.</p>
             </div>
         </div>
     </div>
@@ -496,71 +474,6 @@
             document.querySelectorAll('.tab-content').forEach((content, i) => {
                 content.classList.toggle('active', i === index);
             });
-        }
-
-        // FACE READING
-        const fileInput = document.getElementById('fileInput');
-        const uploadArea = document.querySelector('.upload-area');
-        const previewContainer = document.getElementById('previewContainer');
-        const imagePreview = document.getElementById('imagePreview');
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        imagePreview.src = e.target.result;
-                        previewContainer.classList.add('active');
-                        document.getElementById('faceResult').classList.remove('active');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-        });
-
-        function analyzeImage() {
-            document.getElementById('faceResult').classList.remove('active');
-            document.getElementById('faceLoading').classList.add('active');
-
-            setTimeout(() => {
-                document.getElementById('faceLoading').classList.remove('active');
-                showFaceResults();
-            }, 3000);
-        }
-
-        function showFaceResults() {
-            const signs = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
-            const names = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
-            const idx = Math.floor(Math.random() * 12);
-            
-            const traits = [
-                {name: 'Leadership', value: 70 + Math.floor(Math.random() * 30)},
-                {name: 'Creativity', value: 65 + Math.floor(Math.random() * 30)},
-                {name: 'Empathy', value: 70 + Math.floor(Math.random() * 30)},
-                {name: 'Ambition', value: 60 + Math.floor(Math.random() * 30)}
-            ];
-
-            document.getElementById('faceResult').innerHTML = `
-                <h3>🎭 Your Cosmic Personality</h3>
-                <div class="zodiac-sign">${signs[idx]}</div>
-                <p style="text-align: center; font-size: 1.3em; margin-bottom: 25px;">
-                    <strong>Dominant Energy: ${names[idx]}</strong>
-                </p>
-                <div>
-                    <strong style="font-size: 1.2em; display: block; margin-bottom: 15px;">✨ Core Traits:</strong>
-                    ${traits.map(t => `
-                        <div class="trait">
-                            <strong>${t.name}</strong>
-                            <div style="background: rgba(255,255,255,0.3); height: 8px; border-radius: 5px;">
-                                <div style="background: white; height: 100%; width: ${t.value}%; border-radius: 5px;"></div>
-                            </div>
-                            <span style="opacity: 0.9;">${t.value}% confidence</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            document.getElementById('faceResult').classList.add('active');
         }
 
         // BIRTH CHART
@@ -591,34 +504,51 @@
             const moonIdx = (sunIdx + 1 + Math.floor(Math.random() * 3)) % 12;
             const risingIdx = (sunIdx + 2 + Math.floor(Math.random() * 4)) % 12;
 
+            const insights = [
+                `Your ${signs[sunIdx]} Sun represents your core identity and life purpose. This placement indicates a strong drive toward ${signs[sunIdx] === 'Aries' ? 'leadership and pioneering new paths' : signs[sunIdx] === 'Taurus' ? 'stability and creating lasting value' : signs[sunIdx] === 'Leo' ? 'creative expression and inspiring others' : 'personal growth and meaningful contribution'}.`,
+                `With your Moon in ${signs[moonIdx]}, your emotional nature is ${signs[moonIdx] === 'Cancer' ? 'deeply nurturing and intuitive' : signs[moonIdx] === 'Scorpio' ? 'intense and transformative' : signs[moonIdx] === 'Pisces' ? 'compassionate and spiritually attuned' : 'balanced and emotionally intelligent'}. This governs how you process feelings and connect with others.`,
+                `Your ${signs[risingIdx]} Rising sign shapes your outward personality and life approach. This ascendant gives you a natural ability to ${signs[risingIdx] === 'Sagittarius' ? 'inspire optimism and seek truth' : signs[risingIdx] === 'Libra' ? 'create harmony and build meaningful relationships' : signs[risingIdx] === 'Capricorn' ? 'achieve goals through disciplined effort' : 'navigate life with unique grace'}.`
+            ];
+
             document.getElementById('chartResult').innerHTML = `
                 <h3>🌙 Your Cosmic Blueprint</h3>
-                <div style="text-align: center; margin: 25px 0;">
-                    <div style="font-size: 4em; margin-bottom: 10px;">${symbols[sunIdx]}</div>
-                    <p style="font-size: 1.3em;"><strong>${signs[sunIdx]} Sun</strong></p>
-                    <p style="opacity: 0.9; margin-top: 5px;">${date.toLocaleDateString()} at ${time}</p>
-                    <p style="opacity: 0.9;">${place}</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <div class="zodiac-sign">${symbols[sunIdx]}</div>
+                    <p style="font-size: 1.4em; margin-bottom: 10px;"><strong>${signs[sunIdx]} Sun</strong></p>
+                    <p style="opacity: 0.95; margin-top: 8px; font-size: 1.05em;">${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} at ${time}</p>
+                    <p style="opacity: 0.95; font-size: 1.05em;">${place}</p>
                 </div>
-                <div>
-                    <strong style="font-size: 1.2em; display: block; margin-bottom: 20px;">🪐 Major Positions:</strong>
+                <div style="margin: 35px 0;">
+                    <strong style="font-size: 1.3em; display: block; margin-bottom: 25px;">🪐 Your Planetary Alignment</strong>
                     <div class="planet-card">
                         <h4>${symbols[sunIdx]} Sun in ${signs[sunIdx]}</h4>
-                        <p style="opacity: 0.9;">Core identity and life purpose</p>
+                        <p style="opacity: 0.95; line-height: 1.7;">Your core identity and life purpose</p>
                     </div>
                     <div class="planet-card">
                         <h4>${symbols[moonIdx]} Moon in ${signs[moonIdx]}</h4>
-                        <p style="opacity: 0.9;">Emotional nature and instincts</p>
+                        <p style="opacity: 0.95; line-height: 1.7;">Your emotional nature and inner world</p>
                     </div>
                     <div class="planet-card">
                         <h4>${symbols[risingIdx]} Rising in ${signs[risingIdx]}</h4>
-                        <p style="opacity: 0.9;">Outward personality and approach to life</p>
+                        <p style="opacity: 0.95; line-height: 1.7;">Your outward personality and life approach</p>
                     </div>
                 </div>
+                <div style="margin: 35px 0;">
+                    <strong style="font-size: 1.3em; display: block; margin-bottom: 20px;">✨ AI Cosmic Insights</strong>
+                    ${insights.map(insight => `
+                        <p style="background: rgba(255,255,255,0.2); padding: 18px; border-radius: 12px; margin: 15px 0; line-height: 1.8; font-size: 1.05em;">
+                            ${insight}
+                        </p>
+                    `).join('')}
+                </div>
+                <p style="margin-top: 30px; font-size: 0.95em; opacity: 0.85; text-align: center;">
+                    ⭐ Generated using AI-powered astrological interpretation
+                </p>
             `;
             document.getElementById('chartResult').classList.add('active');
         }
 
-        // AI CHATBOT - INTELLIGENT SIMULATION
+        // AI CHATBOT
         function handleChatKeypress(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -634,7 +564,6 @@
 
             const container = document.getElementById('chatContainer');
             
-            // Add user message
             const userMsg = document.createElement('div');
             userMsg.className = 'chat-message user-message';
             userMsg.textContent = message;
@@ -643,11 +572,9 @@
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
-            // Show loading
             document.getElementById('chatLoading').classList.add('active');
             document.getElementById('sendBtn').disabled = true;
 
-            // Intelligent response generation
             setTimeout(() => {
                 const aiResponse = generateIntelligentResponse(message);
                 
@@ -659,13 +586,12 @@
                 document.getElementById('chatLoading').classList.remove('active');
                 document.getElementById('sendBtn').disabled = false;
                 container.scrollTop = container.scrollHeight;
-            }, 2000);
+            }, 2500);
         }
 
         function generateIntelligentResponse(message) {
             const msg = message.toLowerCase();
             
-            // LOVE & RELATIONSHIPS
             if (msg.includes('love') || msg.includes('relationship') || msg.includes('romance') || msg.includes('partner')) {
                 if (msg.includes('find') || msg.includes('meet')) {
                     return "Venus is entering a favorable position in your chart. The next 2-3 months bring heightened opportunities for romantic connections. Focus on social activities and authentic self-expression. Love often arrives when we're genuinely ourselves. Stay open to unexpected encounters, especially in educational or creative settings.";
@@ -676,9 +602,8 @@
                 return "Your relationship sector is activated by current planetary transits. If you're in a partnership, open communication is essential now. Single? The universe is preparing you for meaningful connection. Work on self-love first—your external relationships mirror your internal state. Venus supports authentic vulnerability.";
             }
             
-            // CAREER & MONEY
-            if (msg.includes('career') || msg.includes('job') || msg.includes('work') || msg.includes('money') || msg.includes('financial')) {
-                if (msg.includes('change') || msg.includes('new') || msg.includes('switch')) {
+            if (msg.includes('career') || msg.includes('job') || msg.includes('work') || msg.includes('business') || msg.includes('money') || msg.includes('financial')) {
+                if (msg.includes('change') || msg.includes('new') || msg.includes('switch') || msg.includes('start')) {
                     return "Jupiter is supporting career expansion and new opportunities. This is indeed a favorable time for professional change, especially if you've felt stagnant. However, ensure you're moving toward something, not just away. Research thoroughly, network actively, and trust your skills. The universe rewards calculated risks taken with intention.";
                 }
                 if (msg.includes('promotion') || msg.includes('raise')) {
@@ -687,7 +612,6 @@
                 return "Your professional sector shows strong activity. Financial opportunities are emerging, but they require strategic action. Focus on skill development, building genuine relationships, and demonstrating leadership. The next quarter brings potential for income increase through dedication and innovative thinking. Trust the process.";
             }
             
-            // ZODIAC SIGNS - Specific interpretations
             if (msg.includes('aries')) {
                 return "Aries energy is bold, pioneering, and courageous. As a fire sign ruled by Mars, you're naturally driven to lead and initiate. Your strength lies in your fearlessness and ability to inspire others. Challenge: impatience and impulsiveness. Channel that fierce energy into purposeful action. This month, focus on tempering warrior spirit with strategic thinking.";
             }
@@ -725,88 +649,5 @@
                 return "Pisces brings compassionate, intuitive, and artistic energy. Ruled by Neptune, you navigate both material and spiritual realms with grace. Your empathy and creativity are profound gifts. Challenge: boundary issues and escapism. Ground your dreams in reality. This transit supports manifesting your visions through practical steps.";
             }
             
-            // HEALTH & WELLNESS
             if (msg.includes('health') || msg.includes('wellness') || msg.includes('body')) {
                 return "The 6th house of health and daily routines is activated. Your body is communicating—listen carefully. This is an excellent time to establish sustainable wellness practices. Focus on prevention rather than reaction. Stress management is crucial; consider meditation, yoga, or nature walks. Your physical health reflects your emotional state. Address both.";
-            }
-            
-            // TIMING & WHEN QUESTIONS
-            if (msg.includes('when') || msg.includes('timing') || msg.includes('should i')) {
-                return "Cosmic timing is nuanced. The current planetary alignments suggest the next 4-6 weeks are favorable for initiating new ventures. However, avoid major decisions during Mercury retrograde (check current dates). Best days this month align with the waxing moon phase. Listen to your intuition—when something feels right energetically, that's often the universe's green light.";
-            }
-            
-            // YES/NO QUESTIONS
-            if (msg.includes('will i') || msg.includes('am i going to')) {
-                return "The stars incline but don't compel. Your chart shows potential and probability, not absolute destiny. Based on current transits, the energy supports positive outcomes IF you take aligned action. You're co-creating with the universe. The question isn't just 'will it happen' but 'are you ready to receive it and do your part?' Free will remains paramount.";
-            }
-            
-            // FAMILY
-            if (msg.includes('family') || msg.includes('mother') || msg.includes('father') || msg.includes('parent')) {
-                return "The 4th house of family and roots is highlighted. Family dynamics often reflect our deepest patterns. This period brings opportunities for healing ancestral wounds and strengthening bonds. Approach family matters with compassion and clear boundaries. Remember, you can honor your lineage while choosing your own path. Healing ripples backward and forward.";
-            }
-            
-            // SPIRITUALITY
-            if (msg.includes('spiritual') || msg.includes('meditation') || msg.includes('awakening') || msg.includes('purpose')) {
-                return "Your spiritual journey is accelerating. Neptune and the North Node are activating your higher consciousness. This is a powerful time for deepening practices, exploring new modalities, and trusting your inner guidance. Your life purpose isn't something to find—it's something you create through aligned living. Pay attention to synchronicities; the universe is speaking.";
-            }
-            
-            // FRIENDSHIP
-            if (msg.includes('friend') || msg.includes('friendship')) {
-                return "The 11th house of friendships and community is active. This transit brings clarity about who truly belongs in your circle. Quality over quantity matters now. True friends support your growth, not your stagnation. It's also favorable for making new connections aligned with your current values. Join groups, attend events, be open. Your tribe is finding you.";
-            }
-            
-            // DEFAULT GENERAL RESPONSE
-            const generals = [
-                "The current planetary configuration in your chart suggests a period of significant personal growth. Pay attention to patterns emerging in your life—they're showing you what needs attention. Trust your intuition, take aligned action, and remain open to unexpected opportunities. The universe is conspiring in your favor, even when the path isn't immediately clear.",
-                "Your cosmic blueprint reveals that this is a transformative phase. The challenges you're facing are actually catalysts for evolution. Embrace the lessons rather than resisting them. Your authentic power emerges when you align with your true nature. What feels difficult now is preparing you for something greater. Stay the course.",
-                "The stars indicate you're in a period of recalibration. What served you before may not serve your next chapter. This is natural and necessary. Release what's complete, even if it's comfortable. Make space for what's trying to emerge. Your soul knows the way—quiet the mind and listen. Transformation requires courage to let go.",
-                "Current transits highlight the importance of balance in your life. You may be over-extended in one area while neglecting another. Wholeness requires attention to physical, emotional, mental, and spiritual needs. Take inventory: what's been ignored? Address it gently but consistently. Small daily actions create massive shifts over time."
-            ];
-            
-            return generals[Math.floor(Math.random() * generals.length)];
-        }
-
-        // DAILY HOROSCOPE
-        function getDailyHoroscope() {
-            const sign = document.getElementById('dailySign').value;
-            
-            if (!sign) {
-                alert('Please select your zodiac sign');
-                return;
-            }
-
-            document.getElementById('dailyResult').classList.remove('active');
-            document.getElementById('dailyLoading').classList.add('active');
-
-            setTimeout(() => {
-                document.getElementById('dailyLoading').classList.remove('active');
-                showDailyResults(sign);
-            }, 2500);
-        }
-
-        function showDailyResults(sign) {
-            const horoscopes = [
-                "Today brings unexpected opportunities your way. The universe is conspiring in your favor. Stay alert and trust your instincts when making important decisions.",
-                "Your creative energy is at its peak today. Channel it into projects that truly inspire you and align with your deepest values. Others will be drawn to your authentic expression.",
-                "Communication flows effortlessly today. It's an excellent time for important conversations, negotiations, and expressing your truth. Your words carry extra power.",
-                "Focus on self-care and emotional wellness. The universe is supporting your journey toward inner peace. Take time for reflection and nurturing activities.",
-                "Financial matters require attention today. Review your resources and make strategic decisions for long-term security. Opportunity knocks in unexpected places."
-            ];
-            
-            const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-            const horoscope = horoscopes[Math.floor(Math.random() * horoscopes.length)];
-            
-            document.getElementById('dailyResult').innerHTML = `
-                <h3>✨ ${sign} - ${today}</h3>
-                <p style="margin-top: 20px; font-size: 1.1em; line-height: 1.8;">${horoscope}</p>
-                <div style="margin-top: 25px;">
-                    <p><strong>Lucky Numbers:</strong> ${Math.floor(Math.random()*50)}, ${Math.floor(Math.random()*50)}, ${Math.floor(Math.random()*50)}</p>
-                    <p><strong>Lucky Color:</strong> ${['Purple','Gold','Blue','Green','Silver','Crimson'][Math.floor(Math.random()*6)]}</p>
-                    <p><strong>Cosmic Mood:</strong> ${['Optimistic','Reflective','Energetic','Peaceful','Adventurous'][Math.floor(Math.random()*5)]}</p>
-                </div>
-            `;
-            document.getElementById('dailyResult').classList.add('active');
-        }
-    </script>
-</body>
-</html>
