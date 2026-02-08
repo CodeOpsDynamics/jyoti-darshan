@@ -1092,7 +1092,7 @@ jyoti-darshan/
 ### Academic Context
 
 This application was developed as part of **Major Research Project - 1 (MRP-1)** at **IIM Ranchi** for the course:
-- **Course:** Marketing Management
+- **Domain:** Marketing Management
 - **Professor:** Prof. Dr. Rajeev Verma
 - **Student:** Himanshu Rai (XW013-25)
 - **Program:** Executive MBA (2025-27)
@@ -1385,9 +1385,9 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 **Himanshu Rai**
 - 🎓 Executive MBA Student, IIM Ranchi (2025-27)
-- 💼 Kubernetes Engineer at Barclays
-- 📧 Email: [Your Email]
-- 💼 LinkedIn: [Your LinkedIn]
+- 💼 DevOps Engineer at Barclays
+- 📧 Email: [himanshu.raixw25@iimranchi.ac.in]
+- 💼 LinkedIn: [https://www.linkedin.com/in/himanshu-rai-b9051983]
 - 🐙 GitHub: [@CodeOpsDynamics](https://github.com/CodeOpsDynamics)
 
 ### Project Links
