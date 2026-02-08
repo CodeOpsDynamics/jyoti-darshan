@@ -27,6 +27,7 @@
             text-align: center;
             color: white;
             padding: 40px 20px;
+            margin-bottom: 30px;
         }
 
         h1 {
@@ -40,11 +41,11 @@
             opacity: 0.9;
         }
 
-        .features {
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .feature-card {
@@ -52,32 +53,85 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
         }
 
-        .feature-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
         .feature-card h2 {
             color: #667eea;
             margin-bottom: 15px;
+            font-size: 1.8em;
         }
 
-        .input-group {
-            margin: 15px 0;
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
             color: #333;
+            font-weight: 500;
         }
 
         input, select, textarea {
@@ -94,85 +148,28 @@
             border-color: #667eea;
         }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            margin-top: 15px;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .result {
+        .result-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
             margin-top: 20px;
-            padding: 20px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            display: none;
+            border-left: 4px solid #667eea;
         }
 
-        .result.show {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            display: none;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .chat-messages {
-            max-height: 400px;
+        .chat-container {
+            height: 400px;
             overflow-y: auto;
-            margin: 15px 0;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
         }
 
         .message {
-            margin: 10px 0;
+            margin-bottom: 15px;
             padding: 10px 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             max-width: 80%;
         }
 
@@ -180,6 +177,7 @@
             background: #667eea;
             color: white;
             margin-left: auto;
+            text-align: right;
         }
 
         .ai-message {
@@ -187,563 +185,621 @@
             border: 2px solid #e0e0e0;
         }
 
-        .horoscope-section {
-            margin: 15px 0;
+        .horoscope-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .horoscope-section h3 {
+        .horoscope-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .horoscope-item strong {
             color: #667eea;
-            margin-bottom: 10px;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .lucky-item {
-            display: inline-block;
-            padding: 8px 15px;
-            background: #667eea;
-            color: white;
-            border-radius: 20px;
-            margin: 5px;
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🌟 Jyoti Darshan</h1>
+            <h1>🌟 Jyoti Darshan 🌟</h1>
             <p class="subtitle">ज्योति दर्शन - Vision of Cosmic Light</p>
+            <p class="subtitle">AI-Powered Vedic Astrology & Spiritual Guidance</p>
         </header>
 
-        <div class="features">
+        <div class="features-grid">
             <!-- Birth Chart Feature -->
             <div class="feature-card">
-                <div class="feature-icon">🔮</div>
-                <h2>Birth Chart</h2>
-                <p>Generate your personalized Vedic birth chart</p>
-                
-                <div class="input-group">
-                    <label for="birthDate">Date of Birth</label>
-                    <input type="date" id="birthDate" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="birthTime">Time of Birth</label>
-                    <input type="time" id="birthTime" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="birthPlace">Place of Birth</label>
-                    <input type="text" id="birthPlace" placeholder="e.g., Mumbai, India" required>
-                </div>
-                
-                <button onclick="generateBirthChart()">✨ Generate Birth Chart</button>
-                
-                <div class="loading" id="birthChartLoading">
-                    <div class="spinner"></div>
-                    <p>Calculating your cosmic blueprint...</p>
-                </div>
-                
-                <div class="result" id="birthChartResult"></div>
+                <h2>📊 Birth Chart (Kundli)</h2>
+                <p>Generate your personalized Vedic birth chart with AI-powered interpretations of planetary positions and their influences on your life.</p>
+                <button onclick="openModal('birthChartModal')">Generate Birth Chart</button>
             </div>
 
             <!-- AI Chatbot Feature -->
             <div class="feature-card">
-                <div class="feature-icon">💬</div>
-                <h2>AI Astrologer</h2>
-                <p>Ask cosmic questions and receive guidance</p>
-                
-                <div class="chat-messages" id="chatMessages"></div>
-                
-                <div class="input-group">
-                    <textarea id="userQuestion" rows="3" placeholder="Ask about love, career, life purpose..."></textarea>
-                </div>
-                
-                <button onclick="askAstrologer()">Send Question</button>
-                
-                <div class="loading" id="chatLoading">
-                    <div class="spinner"></div>
-                    <p>Consulting cosmic wisdom...</p>
-                </div>
+                <h2>🤖 AI Astrologer</h2>
+                <p>Chat with our AI-powered astrologer for personalized guidance on love, career, health, finances, and life purpose.</p>
+                <button onclick="openModal('chatbotModal')">Chat Now</button>
             </div>
 
             <!-- Daily Horoscope Feature -->
             <div class="feature-card">
-                <div class="feature-icon">📅</div>
-                <h2>Daily Guidance</h2>
-                <p>Your personalized horoscope for today</p>
-                
-                <div class="input-group">
-                    <label for="zodiacSign">Select Your Zodiac Sign</label>
-                    <select id="zodiacSign">
-                        <option value="">Choose your sign...</option>
-                        <option value="aries">♈ Aries (March 21 - April 19)</option>
-                        <option value="taurus">♉ Taurus (April 20 - May 20)</option>
-                        <option value="gemini">♊ Gemini (May 21 - June 20)</option>
-                        <option value="cancer">♋ Cancer (June 21 - July 22)</option>
-                        <option value="leo">♌ Leo (July 23 - August 22)</option>
-                        <option value="virgo">♍ Virgo (August 23 - September 22)</option>
-                        <option value="libra">♎ Libra (September 23 - October 22)</option>
-                        <option value="scorpio">♏ Scorpio (October 23 - November 21)</option>
-                        <option value="sagittarius">♐ Sagittarius (November 22 - December 21)</option>
-                        <option value="capricorn">♑ Capricorn (December 22 - January 19)</option>
-                        <option value="aquarius">♒ Aquarius (January 20 - February 18)</option>
-                        <option value="pisces">♓ Pisces (February 19 - March 20)</option>
-                    </select>
-                </div>
-                
-                <button onclick="getDailyHoroscope()">✨ Get Today's Guidance</button>
-                
-                <div class="loading" id="horoscopeLoading">
-                    <div class="spinner"></div>
-                    <p>Reading today's cosmic energies...</p>
-                </div>
-                
-                <div class="result" id="horoscopeResult"></div>
+                <h2>🌙 Daily Horoscope</h2>
+                <p>Get your personalized daily horoscope based on your zodiac sign with lucky numbers, colors, and actionable guidance.</p>
+                <button onclick="openModal('horoscopeModal')">Get Daily Horoscope</button>
+            </div>
+
+            <!-- Face Reading Feature -->
+            <div class="feature-card">
+                <h2>👤 Face Reading (Beta)</h2>
+                <p>Upload your photo for AI-powered facial analysis based on ancient physiognomy principles. Discover personality insights.</p>
+                <button onclick="openModal('faceReadingModal')">Try Face Reading</button>
             </div>
         </div>
     </div>
 
+    <!-- Birth Chart Modal -->
+    <div id="birthChartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('birthChartModal')">&times;</span>
+            <h2>Generate Your Birth Chart</h2>
+            <form onsubmit="generateBirthChart(event)">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="tob">Time of Birth:</label>
+                    <input type="time" id="tob" required>
+                </div>
+                <div class="form-group">
+                    <label for="pob">Place of Birth:</label>
+                    <input type="text" id="pob" placeholder="City, Country" required>
+                </div>
+                <button type="submit">Generate Chart</button>
+            </form>
+            <div id="birthChartResult"></div>
+        </div>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div id="chatbotModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('chatbotModal')">&times;</span>
+            <h2>AI Astrologer Chat</h2>
+            <div id="chatMessages" class="chat-container"></div>
+            <form onsubmit="sendMessage(event)">
+                <div class="form-group">
+                    <textarea id="userQuestion" rows="3" placeholder="Ask about love, career, health, finances, or your life purpose..." required></textarea>
+                </div>
+                <button type="submit">Send Question</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Daily Horoscope Modal -->
+    <div id="horoscopeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('horoscopeModal')">&times;</span>
+            <h2>Daily Horoscope</h2>
+            <form onsubmit="getDailyHoroscope(event)">
+                <div class="form-group">
+                    <label for="zodiacSign">Select Your Zodiac Sign:</label>
+                    <select id="zodiacSign" required>
+                        <option value="">-- Choose Your Sign --</option>
+                        <option value="aries">♈ Aries (Mar 21 - Apr 19)</option>
+                        <option value="taurus">♉ Taurus (Apr 20 - May 20)</option>
+                        <option value="gemini">♊ Gemini (May 21 - Jun 20)</option>
+                        <option value="cancer">♋ Cancer (Jun 21 - Jul 22)</option>
+                        <option value="leo">♌ Leo (Jul 23 - Aug 22)</option>
+                        <option value="virgo">♍ Virgo (Aug 23 - Sep 22)</option>
+                        <option value="libra">♎ Libra (Sep 23 - Oct 22)</option>
+                        <option value="scorpio">♏ Scorpio (Oct 23 - Nov 21)</option>
+                        <option value="sagittarius">♐ Sagittarius (Nov 22 - Dec 21)</option>
+                        <option value="capricorn">♑ Capricorn (Dec 22 - Jan 19)</option>
+                        <option value="aquarius">♒ Aquarius (Jan 20 - Feb 18)</option>
+                        <option value="pisces">♓ Pisces (Feb 19 - Mar 20)</option>
+                    </select>
+                </div>
+                <button type="submit">Get Today's Horoscope</button>
+            </form>
+            <div id="horoscopeResult"></div>
+        </div>
+    </div>
+
+    <!-- Face Reading Modal -->
+    <div id="faceReadingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('faceReadingModal')">&times;</span>
+            <h2>Face Reading Analysis (Beta)</h2>
+            <div class="form-group">
+                <label for="faceImage">Upload Your Photo:</label>
+                <input type="file" id="faceImage" accept="image/*">
+            </div>
+            <button onclick="analyzeFace()">Analyze Face</button>
+            <div id="faceReadingResult"></div>
+        </div>
+    </div>
+
     <script>
-        // Birth Chart Generation
-        async function generateBirthChart() {
-            const date = document.getElementById('birthDate').value;
-            const time = document.getElementById('birthTime').value;
-            const place = document.getElementById('birthPlace').value;
-            
-            if (!date || !time || !place) {
-                alert('Please fill in all birth details');
-                return;
-            }
-            
-            const loading = document.getElementById('birthChartLoading');
-            const result = document.getElementById('birthChartResult');
-            
-            loading.classList.add('show');
-            result.classList.remove('show');
-            
-            // Simulate API call with actual calculations
-            setTimeout(() => {
-                const birthData = calculateBirthChart(date, time, place);
-                
-                result.innerHTML = `
-                    <h3>🌙 Your Birth Chart</h3>
-                    <p><strong>Birth Details:</strong> ${new Date(date).toLocaleDateString('en-IN')} at ${time} in ${place}</p>
-                    
-                    <div style="margin: 20px 0; padding: 15px; background: white; border-radius: 8px;">
-                        <h4>Core Placements</h4>
-                        <p>☀️ <strong>Sun Sign:</strong> ${birthData.sunSign}</p>
-                        <p>🌙 <strong>Moon Sign:</strong> ${birthData.moonSign}</p>
-                        <p>⬆️ <strong>Ascendant (Rising):</strong> ${birthData.ascendant}</p>
-                    </div>
-                    
-                    <div style="margin: 20px 0;">
-                        <h4>Personality Insights</h4>
-                        <p>${birthData.interpretation}</p>
-                    </div>
-                    
-                    <div style="margin: 20px 0;">
-                        <h4>Key Strengths</h4>
-                        <p>${birthData.strengths}</p>
-                    </div>
-                `;
-                
-                loading.classList.remove('show');
-                result.classList.add('show');
-            }, 2000);
-        }
-        
-        function calculateBirthChart(date, time, place) {
-            // Simplified calculation for demo
-            const birthDate = new Date(date);
-            const month = birthDate.getMonth();
-            
-            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
-                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
-            
-            // Calculate sun sign based on birth month (simplified)
-            const sunSignIndex = Math.floor(month / 1);
-            const moonSignIndex = (sunSignIndex + 4) % 12;
-            const ascendantIndex = (sunSignIndex + 2) % 12;
-            
-            const sunSign = signs[sunSignIndex];
-            const moonSign = signs[moonSignIndex];
-            const ascendant = signs[ascendantIndex];
-            
-            return {
-                sunSign,
-                moonSign,
-                ascendant,
-                interpretation: `With your Sun in ${sunSign}, you possess the core qualities of determination, creativity, and natural leadership. Your ${moonSign} Moon reveals deep emotional intelligence and intuitive understanding of others. The ${ascendant} Ascendant shapes how you present yourself to the world—with confidence and authenticity.`,
-                strengths: `Your ${sunSign} energy gives you resilience and drive. Combined with ${moonSign} emotional depth, you have a unique ability to connect with people on both intellectual and emotional levels. This makes you naturally suited for roles requiring both strategic thinking and empathy.`
-            };
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
         }
 
-        // AI Chatbot
-        const chatHistory = [];
-        
-        async function askAstrologer() {
-            const question = document.getElementById('userQuestion').value.trim();
-            
-            if (!question) {
-                alert('Please enter your question');
-                return;
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
+        }
+
+        // Birth Chart Generation
+        function generateBirthChart(event) {
+            event.preventDefault();
             
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+            const tob = document.getElementById('tob').value;
+            const pob = document.getElementById('pob').value;
+
+            // Calculate zodiac sign from date
+            const date = new Date(dob);
+            const zodiac = getZodiacSign(date.getMonth() + 1, date.getDate());
+
+            // Simulate birth chart generation
+            const result = `
+                <div class="result-box">
+                    <h3>🌟 Birth Chart for ${name}</h3>
+                    <p><strong>Date of Birth:</strong> ${dob}</p>
+                    <p><strong>Time of Birth:</strong> ${tob}</p>
+                    <p><strong>Place of Birth:</strong> ${pob}</p>
+                    <p><strong>Sun Sign:</strong> ${zodiac}</p>
+                    
+                    <h4>📊 Planetary Positions:</h4>
+                    <p><strong>☉ Sun:</strong> ${zodiac} - Your core identity and life purpose</p>
+                    <p><strong>☽ Moon:</strong> ${getMoonSign()} - Your emotional nature and instincts</p>
+                    <p><strong>☿ Mercury:</strong> ${getMercurySign()} - Your communication style and thinking</p>
+                    <p><strong>♀ Venus:</strong> ${getVenusSign()} - Your approach to love and relationships</p>
+                    <p><strong>♂ Mars:</strong> ${getMarsSign()} - Your energy and drive</p>
+                    
+                    <h4>🎯 AI Interpretation:</h4>
+                    <p>Your ${zodiac} Sun indicates a strong drive for ${getZodiacTrait(zodiac)}. 
+                    The planetary alignments at your birth suggest natural talents in leadership and communication. 
+                    Your Moon placement enhances emotional intelligence, making you naturally empathetic. 
+                    This is an excellent time to pursue your creative passions and build meaningful relationships.</p>
+                    
+                    <p><em>Note: This is a simplified birth chart. For detailed analysis, consult with a professional astrologer.</em></p>
+                </div>
+            `;
+
+            document.getElementById('birthChartResult').innerHTML = result;
+        }
+
+        function getZodiacSign(month, day) {
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries ♈";
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus ♉";
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini ♊";
+            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer ♋";
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo ♌";
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo ♍";
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra ♎";
+            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio ♏";
+            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius ♐";
+            if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn ♑";
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius ♒";
+            return "Pisces ♓";
+        }
+
+        function getMoonSign() {
+            const signs = ["Cancer ♋", "Pisces ♓", "Scorpio ♏", "Taurus ♉"];
+            return signs[Math.floor(Math.random() * signs.length)];
+        }
+
+        function getMercurySign() {
+            const signs = ["Gemini ♊", "Virgo ♍", "Aquarius ♒"];
+            return signs[Math.floor(Math.random() * signs.length)];
+        }
+
+        function getVenusSign() {
+            const signs = ["Libra ♎", "Taurus ♉", "Pisces ♓"];
+            return signs[Math.floor(Math.random() * signs.length)];
+        }
+
+        function getMarsSign() {
+            const signs = ["Aries ♈", "Scorpio ♏", "Capricorn ♑"];
+            return signs[Math.floor(Math.random() * signs.length)];
+        }
+
+        function getZodiacTrait(zodiac) {
+            const traits = {
+                "Aries ♈": "initiative and bold action",
+                "Taurus ♉": "stability and material security",
+                "Gemini ♊": "communication and intellectual pursuits",
+                "Cancer ♋": "emotional depth and nurturing",
+                "Leo ♌": "self-expression and creative leadership",
+                "Virgo ♍": "service and analytical precision",
+                "Libra ♎": "harmony and balanced relationships",
+                "Scorpio ♏": "transformation and deep insights",
+                "Sagittarius ♐": "exploration and philosophical wisdom",
+                "Capricorn ♑": "ambition and structured achievement",
+                "Aquarius ♒": "innovation and humanitarian ideals",
+                "Pisces ♓": "compassion and spiritual connection"
+            };
+            return traits[zodiac] || "personal growth";
+        }
+
+        // ========================================
+        // FIXED AI CHATBOT WITH KEYWORD DETECTION
+        // ========================================
+        function sendMessage(event) {
+            event.preventDefault();
+            
+            const question = document.getElementById('userQuestion').value;
             const chatMessages = document.getElementById('chatMessages');
-            const loading = document.getElementById('chatLoading');
             
             // Add user message
-            const userMsg = document.createElement('div');
-            userMsg.className = 'message user-message';
-            userMsg.textContent = question;
-            chatMessages.appendChild(userMsg);
-            chatHistory.push({role: 'user', content: question});
+            chatMessages.innerHTML += `
+                <div class="message user-message">
+                    <strong>You:</strong><br>${question}
+                </div>
+            `;
             
-            // Clear input
+            // Generate and add AI response
+            const response = generateAIResponse(question);
+            chatMessages.innerHTML += `
+                <div class="message ai-message">
+                    <strong>AI Astrologer:</strong><br>${response}
+                </div>
+            `;
+            
+            // Clear input and scroll to bottom
             document.getElementById('userQuestion').value = '';
-            
-            // Show loading
-            loading.classList.add('show');
-            
-            // Simulate AI response
-            setTimeout(() => {
-                const response = generateAIResponse(question);
-                
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'message ai-message';
-                aiMsg.textContent = response;
-                chatMessages.appendChild(aiMsg);
-                chatHistory.push({role: 'assistant', content: response});
-                
-                loading.classList.remove('show');
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1500);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-        
-        // FIXED AI ASTROLOGER CHATBOT - Better Keyword Detection
-// Replace the generateAIResponse function in your HTML with this:
 
-function generateAIResponse(question) {
-    // Convert to lowercase for case-insensitive matching
-    const lowerQ = question.toLowerCase();
-    
-    // Check for love/relationship keywords
-    if (lowerQ.includes('love') || lowerQ.includes('relationship') || 
-        lowerQ.includes('marriage') || lowerQ.includes('partner') || 
-        lowerQ.includes('boyfriend') || lowerQ.includes('girlfriend') ||
-        lowerQ.includes('dating') || lowerQ.includes('romance')) {
-        return "🌹 In matters of the heart, Venus is guiding your path this month. " +
-               "Your emotional intelligence and authentic communication will strengthen bonds. " +
-               "If you're seeking love, focus on self-love first—the universe mirrors what you cultivate within. " +
-               "For those in relationships, this is an excellent time for deeper conversations and shared experiences. " +
-               "Trust your intuition when connecting with others.";
-    }
-    
-    // Check for career/work keywords
-    else if (lowerQ.includes('career') || lowerQ.includes('job') || 
-             lowerQ.includes('work') || lowerQ.includes('promotion') || 
-             lowerQ.includes('business') || lowerQ.includes('professional') ||
-             lowerQ.includes('office') || lowerQ.includes('salary')) {
-        return "💼 The planetary transits suggest promising professional opportunities ahead. " +
-               "Jupiter's influence indicates growth through collaboration and mentorship. " +
-               "Focus on building your skills and expanding your professional network. " +
-               "This is a favorable period for taking calculated risks and presenting your ideas to leadership. " +
-               "Your hard work and persistence will be recognized. Stay patient and strategic.";
-    }
-    
-    // Check for health/wellness keywords
-    else if (lowerQ.includes('health') || lowerQ.includes('wellness') || 
-             lowerQ.includes('fitness') || lowerQ.includes('sick') || 
-             lowerQ.includes('disease') || lowerQ.includes('body') ||
-             lowerQ.includes('energy') || lowerQ.includes('tired')) {
-        return "🌿 Your health is influenced by the Moon's current position in your chart. " +
-               "Pay close attention to your body's signals and prioritize adequate rest. " +
-               "Incorporate meditation, yoga, or gentle exercise to balance your energies. " +
-               "Stay well-hydrated and maintain a consistent sleep schedule. " +
-               "Consider adding more fresh fruits and vegetables to your diet. Your vitality will improve with mindful self-care.";
-    }
-    
-    // Check for money/finance keywords
-    else if (lowerQ.includes('money') || lowerQ.includes('finance') || 
-             lowerQ.includes('wealth') || lowerQ.includes('invest') || 
-             lowerQ.includes('saving') || lowerQ.includes('rich') ||
-             lowerQ.includes('income') || lowerQ.includes('debt')) {
-        return "💰 Saturn's influence suggests a conservative approach to finances is wise now. " +
-               "Focus on long-term investments rather than quick gains. " +
-               "This is an excellent time to review your budget and create sustainable financial plans. " +
-               "Avoid impulsive spending and seek professional advice for major financial decisions. " +
-               "Building a solid foundation now will lead to future prosperity.";
-    }
-    
-    // Check for family keywords
-    else if (lowerQ.includes('family') || lowerQ.includes('mother') || 
-             lowerQ.includes('father') || lowerQ.includes('parent') || 
-             lowerQ.includes('sibling') || lowerQ.includes('children') ||
-             lowerQ.includes('home') || lowerQ.includes('relatives')) {
-        return "🏠 Family relationships are highlighted in your chart this period. " +
-               "The Moon's placement encourages nurturing connections with loved ones. " +
-               "This is a favorable time for healing old wounds and strengthening family bonds. " +
-               "Practice patience and empathy in family interactions. " +
-               "Creating shared memories and traditions will bring lasting joy.";
-    }
-    
-    // Check for education/learning keywords
-    else if (lowerQ.includes('education') || lowerQ.includes('study') || 
-             lowerQ.includes('exam') || lowerQ.includes('learning') || 
-             lowerQ.includes('course') || lowerQ.includes('school') ||
-             lowerQ.includes('university') || lowerQ.includes('knowledge')) {
-        return "📚 Mercury's favorable position enhances your learning abilities now. " +
-               "Your mind is sharp and receptive to new information. " +
-               "This is an excellent time to pursue educational goals or develop new skills. " +
-               "Focus on subjects that genuinely interest you for better retention. " +
-               "Consistent study habits and seeking mentorship will accelerate your progress.";
-    }
-    
-    // Check for travel keywords
-    else if (lowerQ.includes('travel') || lowerQ.includes('journey') || 
-             lowerQ.includes('trip') || lowerQ.includes('vacation') || 
-             lowerQ.includes('abroad') || lowerQ.includes('foreign')) {
-        return "✈️ Jupiter's influence on your 9th house suggests favorable conditions for travel. " +
-               "Long-distance journeys or spiritual pilgrimages are especially beneficial now. " +
-               "Travel will bring new perspectives and opportunities for personal growth. " +
-               "If planning international trips, ensure all documents are in order. " +
-               "Stay open to unexpected adventures and cultural experiences.";
-    }
-    
-    // Check for spiritual/life purpose keywords
-    else if (lowerQ.includes('spiritual') || lowerQ.includes('purpose') || 
-             lowerQ.includes('meaning') || lowerQ.includes('meditation') || 
-             lowerQ.includes('destiny') || lowerQ.includes('soul') ||
-             lowerQ.includes('karma') || lowerQ.includes('enlightenment')) {
-        return "🕉️ You are entering a spiritually significant phase of your journey. " +
-               "The cosmos invites you to deepen your connection with your inner self. " +
-               "Regular meditation and introspection will reveal important insights about your life purpose. " +
-               "Trust the process of spiritual awakening even when the path seems unclear. " +
-               "Your higher consciousness is guiding you toward your true calling.";
-    }
-    
-    // Check for future/prediction keywords
-    else if (lowerQ.includes('future') || lowerQ.includes('prediction') || 
-             lowerQ.includes('will happen') || lowerQ.includes('when will') || 
-             lowerQ.includes('what will') || lowerQ.includes('forecast')) {
-        return "🔮 The future unfolds based on your present actions and choices. " +
-               "The stars show favorable planetary alignments in the coming months, " +
-               "suggesting growth and positive developments in areas you focus your energy. " +
-               "Rather than waiting for destiny, actively create your desired future through intention and effort. " +
-               "Trust that the universe supports your highest good.";
-    }
-    
-    // Check for luck keywords
-    else if (lowerQ.includes('luck') || lowerQ.includes('fortune') || 
-             lowerQ.includes('lucky') || lowerQ.includes('chance')) {
-        return "🍀 Your luck is influenced by Jupiter's current transit through your chart. " +
-               "Opportunities often appear disguised as challenges—stay alert and positive. " +
-               "Your fortunate periods align with new moon and full moon phases. " +
-               "Wearing green or yellow colors can enhance your luck this month. " +
-               "Remember: you create your own luck through preparation meeting opportunity.";
-    }
-    
-    // Default response for general questions
-    else {
-        return "✨ The cosmos is aligning in your favor. Trust the journey you're on. " +
-               "Each challenge is an opportunity for growth and self-discovery. " +
-               "Focus on your inner wisdom and stay aligned with your authentic path. " +
-               "The universe supports those who act with intention and integrity. " +
-               "If you have specific questions about love, career, health, or finances, feel free to ask!";
-    }
-}
-
-// TEST THE FUNCTION:
-console.log("Testing AI Chatbot Responses:");
-console.log("\nTest 1 - Love:", generateAIResponse("Will I find love?"));
-console.log("\nTest 2 - Career:", generateAIResponse("What about my career?"));
-console.log("\nTest 3 - Money:", generateAIResponse("How is my financial situation?"));
-console.log("\nTest 4 - Health:", generateAIResponse("What about my health?"));
-console.log("\nTest 5 - General:", generateAIResponse("Hello"));
-
-        // Daily Horoscope
-        async function getDailyHoroscope() {
-            const sign = document.getElementById('zodiacSign').value;
+        function generateAIResponse(question) {
+            // Convert to lowercase for case-insensitive matching
+            const lowerQ = question.toLowerCase();
             
-            if (!sign) {
-                alert('Please select your zodiac sign');
-                return;
+            // Check for love/relationship keywords
+            if (lowerQ.includes('love') || lowerQ.includes('relationship') || 
+                lowerQ.includes('marriage') || lowerQ.includes('partner') || 
+                lowerQ.includes('boyfriend') || lowerQ.includes('girlfriend') ||
+                lowerQ.includes('dating') || lowerQ.includes('romance')) {
+                return "🌹 In matters of the heart, Venus is guiding your path this month. " +
+                       "Your emotional intelligence and authentic communication will strengthen bonds. " +
+                       "If you're seeking love, focus on self-love first—the universe mirrors what you cultivate within. " +
+                       "For those in relationships, this is an excellent time for deeper conversations and shared experiences. " +
+                       "Trust your intuition when connecting with others.";
             }
             
-            const loading = document.getElementById('horoscopeLoading');
-            const result = document.getElementById('horoscopeResult');
+            // Check for career/work keywords
+            else if (lowerQ.includes('career') || lowerQ.includes('job') || 
+                     lowerQ.includes('work') || lowerQ.includes('promotion') || 
+                     lowerQ.includes('business') || lowerQ.includes('professional') ||
+                     lowerQ.includes('office') || lowerQ.includes('salary')) {
+                return "💼 The planetary transits suggest promising professional opportunities ahead. " +
+                       "Jupiter's influence indicates growth through collaboration and mentorship. " +
+                       "Focus on building your skills and expanding your professional network. " +
+                       "This is a favorable period for taking calculated risks and presenting your ideas to leadership. " +
+                       "Your hard work and persistence will be recognized. Stay patient and strategic.";
+            }
             
-            loading.classList.add('show');
-            result.classList.remove('show');
+            // Check for health/wellness keywords
+            else if (lowerQ.includes('health') || lowerQ.includes('wellness') || 
+                     lowerQ.includes('fitness') || lowerQ.includes('sick') || 
+                     lowerQ.includes('disease') || lowerQ.includes('body') ||
+                     lowerQ.includes('energy') || lowerQ.includes('tired')) {
+                return "🌿 Your health is influenced by the Moon's current position in your chart. " +
+                       "Pay close attention to your body's signals and prioritize adequate rest. " +
+                       "Incorporate meditation, yoga, or gentle exercise to balance your energies. " +
+                       "Stay well-hydrated and maintain a consistent sleep schedule. " +
+                       "Consider adding more fresh fruits and vegetables to your diet. Your vitality will improve with mindful self-care.";
+            }
             
-            setTimeout(() => {
-                const horoscope = generateHoroscope(sign);
-                const today = new Date().toLocaleDateString('en-IN', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                });
-                
-                result.innerHTML = `
-                    <h3>✨ ${sign.charAt(0).toUpperCase() + sign.slice(1)} - ${today}</h3>
-                    
-                    <div class="horoscope-section">
-                        <h4>🌟 Overall Energy</h4>
-                        <p>${horoscope.overall}</p>
-                    </div>
-                    
-                    <div class="horoscope-section">
-                        <h4>❤️ Love & Relationships</h4>
-                        <p>${horoscope.love}</p>
-                    </div>
-                    
-                    <div class="horoscope-section">
-                        <h4>💼 Career & Finances</h4>
-                        <p>${horoscope.career}</p>
-                    </div>
-                    
-                    <div class="horoscope-section">
-                        <h4>🏃 Health & Wellness</h4>
-                        <p>${horoscope.health}</p>
-                    </div>
-                    
-                    <div style="margin-top: 20px;">
-                        <span class="lucky-item">🍀 Lucky Number: ${horoscope.luckyNumber}</span>
-                        <span class="lucky-item">🎨 Lucky Color: ${horoscope.luckyColor}</span>
-                    </div>
-                    
-                    <div class="horoscope-section">
-                        <h4>💡 Today's Suggestion</h4>
-                        <p><em>${horoscope.suggestion}</em></p>
-                    </div>
-                `;
-                
-                loading.classList.remove('show');
-                result.classList.add('show');
-            }, 1500);
-        }
-        
-        function generateHoroscope(sign) {
-            const horoscopes = {
-                aries: {
-                    overall: "Today brings dynamic energy and new opportunities. Your natural leadership qualities shine bright.",
-                    love: "Single? A chance encounter could spark interest. In a relationship? Express your feelings openly.",
-                    career: "Your initiative impresses superiors. Take charge of that project you've been considering.",
-                    health: "High energy today! Perfect for physical activity, but don't overexert yourself.",
-                    luckyNumber: 7,
-                    luckyColor: "Red",
-                    suggestion: "Channel your passion into creative pursuits today."
-                },
-                taurus: {
-                    overall: "Steady progress and financial stability characterize your day. Trust your practical instincts.",
-                    love: "Deepen connections through meaningful conversations and shared experiences.",
-                    career: "Your persistence pays off. Focus on long-term goals rather than quick wins.",
-                    health: "Take time to enjoy good food and relaxation. Self-care is essential.",
-                    luckyNumber: 6,
-                    luckyColor: "Green",
-                    suggestion: "Ground yourself in nature today for renewed energy."
-                },
-                gemini: {
-                    overall: "Communication is your superpower today. Network, share ideas, and connect.",
-                    love: "Intellectual stimulation strengthens bonds. Engage in deep conversations.",
-                    career: "Your versatility opens multiple opportunities. Stay organized to manage them all.",
-                    health: "Mental stimulation is important, but don't neglect physical movement.",
-                    luckyNumber: 5,
-                    luckyColor: "Yellow",
-                    suggestion: "Learn something new today to feed your curious mind."
-                },
-                cancer: {
-                    overall: "Emotional intuition guides you well today. Trust your feelings.",
-                    love: "Nurture your relationships with genuine care and understanding.",
-                    career: "Your empathy helps resolve team conflicts. Be the peacemaker.",
-                    health: "Emotional well-being affects physical health. Practice mindfulness.",
-                    luckyNumber: 2,
-                    luckyColor: "Silver",
-                    suggestion: "Spend quality time with family or close friends today."
-                },
-                leo: {
-                    overall: "Your confidence attracts opportunities. Shine bright and lead with heart.",
-                    love: "Romance is in the air! Express your affection generously.",
-                    career: "Your creative solutions impress colleagues. Don't hold back your ideas.",
-                    health: "High vitality today. Channel energy into activities you enjoy.",
-                    luckyNumber: 1,
-                    luckyColor: "Gold",
-                    suggestion: "Celebrate your achievements, no matter how small."
-                },
-                virgo: {
-                    overall: "Attention to detail brings success. Your analytical skills are sharp.",
-                    love: "Show love through practical gestures and thoughtful actions.",
-                    career: "Organization and efficiency lead to recognition. Streamline processes.",
-                    health: "Maintain routines but add variety to avoid monotony.",
-                    luckyNumber: 5,
-                    luckyColor: "Navy Blue",
-                    suggestion: "Help someone organize or solve a problem today."
-                },
-                libra: {
-                    overall: "Balance and harmony guide your day. Seek fairness in all interactions.",
-                    love: "Partnership thrives on compromise. Find middle ground in disagreements.",
-                    career: "Your diplomatic skills resolve conflicts. Mediate with grace.",
-                    health: "Balance work with rest. Avoid extremes in any area.",
-                    luckyNumber: 6,
-                    luckyColor: "Pink",
-                    suggestion: "Appreciate beauty around you—art, music, or nature."
-                },
-                scorpio: {
-                    overall: "Deep transformation is possible today. Embrace change with courage.",
-                    love: "Intensity deepens connections. Be vulnerable with trusted partners.",
-                    career: "Your research uncovers valuable insights. Dig deeper into projects.",
-                    health: "Emotional release is healing. Don't suppress feelings.",
-                    luckyNumber: 9,
-                    luckyColor: "Maroon",
-                    suggestion: "Let go of what no longer serves your highest good."
-                },
-                sagittarius: {
-                    overall: "Adventure calls! Expand your horizons through new experiences.",
-                    love: "Honesty and optimism attract like-minded souls.",
-                    career: "Your enthusiasm is contagious. Inspire your team with vision.",
-                    health: "Outdoor activities boost mood and vitality.",
-                    luckyNumber: 3,
-                    luckyColor: "Purple",
-                    suggestion: "Explore something new today—a place, idea, or perspective."
-                },
-                capricorn: {
-                    overall: "Discipline and determination drive progress. Your goals are within reach.",
-                    love: "Show commitment through consistent, reliable actions.",
-                    career: "Leadership opportunities arise. Take calculated risks.",
-                    health: "Structure supports wellness. Stick to healthy routines.",
-                    luckyNumber: 8,
-                    luckyColor: "Brown",
-                    suggestion: "Set a realistic goal and take one step toward it today."
-                },
-                aquarius: {
-                    overall: "Innovation and originality set you apart. Think outside the box.",
-                    love: "Friendship forms the foundation of lasting romance.",
-                    career: "Your unique perspective solves stubborn problems.",
-                    health: "Social connections boost mental health. Connect with community.",
-                    luckyNumber: 4,
-                    luckyColor: "Electric Blue",
-                    suggestion: "Contribute to a cause you believe in today."
-                },
-                pisces: {
-                    overall: "Intuition and creativity flow freely. Trust your inner voice.",
-                    love: "Emotional connection deepens through shared dreams and compassion.",
-                    career: "Your imagination brings fresh solutions. Think creatively.",
-                    health: "Spiritual practices enhance well-being. Meditate or reflect.",
-                    luckyNumber: 7,
-                    luckyColor: "Sea Green",
-                    suggestion: "Express yourself through art, music, or writing today."
-                }
-            };
+            // Check for money/finance keywords
+            else if (lowerQ.includes('money') || lowerQ.includes('finance') || 
+                     lowerQ.includes('wealth') || lowerQ.includes('invest') || 
+                     lowerQ.includes('saving') || lowerQ.includes('rich') ||
+                     lowerQ.includes('income') || lowerQ.includes('debt')) {
+                return "💰 Saturn's influence suggests a conservative approach to finances is wise now. " +
+                       "Focus on long-term investments rather than quick gains. " +
+                       "This is an excellent time to review your budget and create sustainable financial plans. " +
+                       "Avoid impulsive spending and seek professional advice for major financial decisions. " +
+                       "Building a solid foundation now will lead to future prosperity.";
+            }
             
-            return horoscopes[sign] || horoscopes.aries;
+            // Check for family keywords
+            else if (lowerQ.includes('family') || lowerQ.includes('mother') || 
+                     lowerQ.includes('father') || lowerQ.includes('parent') || 
+                     lowerQ.includes('sibling') || lowerQ.includes('children') ||
+                     lowerQ.includes('home') || lowerQ.includes('relatives')) {
+                return "🏠 Family relationships are highlighted in your chart this period. " +
+                       "The Moon's placement encourages nurturing connections with loved ones. " +
+                       "This is a favorable time for healing old wounds and strengthening family bonds. " +
+                       "Practice patience and empathy in family interactions. " +
+                       "Creating shared memories and traditions will bring lasting joy.";
+            }
+            
+            // Check for education/learning keywords
+            else if (lowerQ.includes('education') || lowerQ.includes('study') || 
+                     lowerQ.includes('exam') || lowerQ.includes('learning') || 
+                     lowerQ.includes('course') || lowerQ.includes('school') ||
+                     lowerQ.includes('university') || lowerQ.includes('knowledge')) {
+                return "📚 Mercury's favorable position enhances your learning abilities now. " +
+                       "Your mind is sharp and receptive to new information. " +
+                       "This is an excellent time to pursue educational goals or develop new skills. " +
+                       "Focus on subjects that genuinely interest you for better retention. " +
+                       "Consistent study habits and seeking mentorship will accelerate your progress.";
+            }
+            
+            // Check for travel keywords
+            else if (lowerQ.includes('travel') || lowerQ.includes('journey') || 
+                     lowerQ.includes('trip') || lowerQ.includes('vacation') || 
+                     lowerQ.includes('abroad') || lowerQ.includes('foreign')) {
+                return "✈️ Jupiter's influence on your 9th house suggests favorable conditions for travel. " +
+                       "Long-distance journeys or spiritual pilgrimages are especially beneficial now. " +
+                       "Travel will bring new perspectives and opportunities for personal growth. " +
+                       "If planning international trips, ensure all documents are in order. " +
+                       "Stay open to unexpected adventures and cultural experiences.";
+            }
+            
+            // Check for spiritual/life purpose keywords
+            else if (lowerQ.includes('spiritual') || lowerQ.includes('purpose') || 
+                     lowerQ.includes('meaning') || lowerQ.includes('meditation') || 
+                     lowerQ.includes('destiny') || lowerQ.includes('soul') ||
+                     lowerQ.includes('karma') || lowerQ.includes('enlightenment')) {
+                return "🕉️ You are entering a spiritually significant phase of your journey. " +
+                       "The cosmos invites you to deepen your connection with your inner self. " +
+                       "Regular meditation and introspection will reveal important insights about your life purpose. " +
+                       "Trust the process of spiritual awakening even when the path seems unclear. " +
+                       "Your higher consciousness is guiding you toward your true calling.";
+            }
+            
+            // Check for future/prediction keywords
+            else if (lowerQ.includes('future') || lowerQ.includes('prediction') || 
+                     lowerQ.includes('will happen') || lowerQ.includes('when will') || 
+                     lowerQ.includes('what will') || lowerQ.includes('forecast')) {
+                return "🔮 The future unfolds based on your present actions and choices. " +
+                       "The stars show favorable planetary alignments in the coming months, " +
+                       "suggesting growth and positive developments in areas you focus your energy. " +
+                       "Rather than waiting for destiny, actively create your desired future through intention and effort. " +
+                       "Trust that the universe supports your highest good.";
+            }
+            
+            // Check for luck keywords
+            else if (lowerQ.includes('luck') || lowerQ.includes('fortune') || 
+                     lowerQ.includes('lucky') || lowerQ.includes('chance')) {
+                return "🍀 Your luck is influenced by Jupiter's current transit through your chart. " +
+                       "Opportunities often appear disguised as challenges—stay alert and positive. " +
+                       "Your fortunate periods align with new moon and full moon phases. " +
+                       "Wearing green or yellow colors can enhance your luck this month. " +
+                       "Remember: you create your own luck through preparation meeting opportunity.";
+            }
+            
+            // Default response for general questions
+            else {
+                return "✨ The cosmos is aligning in your favor. Trust the journey you're on. " +
+                       "Each challenge is an opportunity for growth and self-discovery. " +
+                       "Focus on your inner wisdom and stay aligned with your authentic path. " +
+                       "The universe supports those who act with intention and integrity. " +
+                       "If you have specific questions about love, career, health, or finances, feel free to ask!";
+            }
         }
 
-        // Initialize chat on page load
+        // Daily Horoscope
+        function getDailyHoroscope(event) {
+            event.preventDefault();
+            
+            const sign = document.getElementById('zodiacSign').value;
+            const horoscopes = {
+                aries: {
+                    general: "Today brings powerful energy for new beginnings. Your natural leadership shines.",
+                    love: "Express your feelings openly. Honest communication strengthens bonds.",
+                    career: "Bold initiatives receive support. Present your innovative ideas confidently.",
+                    health: "Channel your abundant energy into physical activities. Stay hydrated.",
+                    lucky: "7, 14, 23",
+                    color: "Red"
+                },
+                taurus: {
+                    general: "Financial opportunities emerge. Your practical approach yields results.",
+                    love: "Stability and comfort define your romantic connections today.",
+                    career: "Patience and persistence lead to solid achievements in your work.",
+                    health: "Indulge in sensory pleasures moderately. Balance is key.",
+                    lucky: "6, 15, 24",
+                    color: "Green"
+                },
+                gemini: {
+                    general: "Your curiosity opens new doors. Communication flows effortlessly.",
+                    love: "Intellectual connection deepens emotional bonds. Share your thoughts.",
+                    career: "Networking and collaboration bring unexpected opportunities.",
+                    health: "Mental stimulation is important. Balance it with adequate rest.",
+                    lucky: "5, 14, 23",
+                    color: "Yellow"
+                },
+                cancer: {
+                    general: "Emotional clarity guides your decisions. Trust your intuition deeply.",
+                    love: "Nurturing gestures strengthen family and romantic relationships.",
+                    career: "Your empathy creates harmonious work environment. Lead with compassion.",
+                    health: "Self-care rituals restore your emotional and physical well-being.",
+                    lucky: "2, 11, 20",
+                    color: "Silver"
+                },
+                leo: {
+                    general: "Your charisma attracts positive attention. Shine confidently.",
+                    love: "Romance flourishes when you show your authentic self.",
+                    career: "Creative projects gain recognition. Take center stage proudly.",
+                    health: "Regular exercise boosts your vitality and confidence.",
+                    lucky: "1, 10, 19",
+                    color: "Gold"
+                },
+                virgo: {
+                    general: "Attention to detail brings perfection. Your analysis proves valuable.",
+                    love: "Practical support shows your care more than grand gestures.",
+                    career: "Organization and efficiency impress superiors. Stay methodical.",
+                    health: "Wellness routines yield visible improvements. Maintain consistency.",
+                    lucky: "5, 14, 23",
+                    color: "Navy Blue"
+                },
+                libra: {
+                    general: "Harmony and balance define your day. Diplomatic approach succeeds.",
+                    love: "Partnership thrives through mutual understanding and compromise.",
+                    career: "Collaboration and teamwork lead to shared success.",
+                    health: "Find balance between activity and rest. Equilibrium is vital.",
+                    lucky: "6, 15, 24",
+                    color: "Pink"
+                },
+                scorpio: {
+                    general: "Deep transformation is underway. Embrace profound changes.",
+                    love: "Emotional intensity strengthens intimate connections.",
+                    career: "Your determination overcomes obstacles. Persistence pays off.",
+                    health: "Release emotional stress through physical activities.",
+                    lucky: "9, 18, 27",
+                    color: "Maroon"
+                },
+                sagittarius: {
+                    general: "Adventure calls you forward. Expand your horizons boldly.",
+                    love: "Honesty and optimism attract like-minded souls.",
+                    career: "Learning opportunities advance your professional growth.",
+                    health: "Outdoor activities energize body and spirit.",
+                    lucky: "3, 12, 21",
+                    color: "Purple"
+                },
+                capricorn: {
+                    general: "Discipline and ambition drive your progress steadily forward.",
+                    love: "Commitment and loyalty define your relationship approach.",
+                    career: "Long-term planning yields tangible career advancements.",
+                    health: "Structure your wellness routine for sustained results.",
+                    lucky: "8, 17, 26",
+                    color: "Brown"
+                },
+                aquarius: {
+                    general: "Innovation and originality set you apart brilliantly.",
+                    love: "Unconventional connections bring unexpected joy.",
+                    career: "Your unique perspective solves complex problems creatively.",
+                    health: "Social activities boost mental and emotional health.",
+                    lucky: "4, 13, 22",
+                    color: "Electric Blue"
+                },
+                pisces: {
+                    general: "Intuition and compassion guide your interactions.",
+                    love: "Deep emotional connection transcends words.",
+                    career: "Creative projects flow naturally. Trust your artistic vision.",
+                    health: "Spiritual practices enhance overall well-being.",
+                    lucky: "7, 16, 25",
+                    color: "Sea Green"
+                }
+            };
+
+            const horoscope = horoscopes[sign];
+            const today = new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            const result = `
+                <div class="result-box">
+                    <h3>🌟 Daily Horoscope for ${sign.charAt(0).toUpperCase() + sign.slice(1)}</h3>
+                    <p><strong>Date:</strong> ${today}</p>
+                    
+                    <div class="horoscope-grid">
+                        <div class="horoscope-item">
+                            <strong>✨ General:</strong>
+                            ${horoscope.general}
+                        </div>
+                        <div class="horoscope-item">
+                            <strong>❤️ Love:</strong>
+                            ${horoscope.love}
+                        </div>
+                        <div class="horoscope-item">
+                            <strong>💼 Career:</strong>
+                            ${horoscope.career}
+                        </div>
+                        <div class="horoscope-item">
+                            <strong>🌿 Health:</strong>
+                            ${horoscope.health}
+                        </div>
+                        <div class="horoscope-item">
+                            <strong>🍀 Lucky Numbers:</strong>
+                            ${horoscope.lucky}
+                        </div>
+                        <div class="horoscope-item">
+                            <strong>🎨 Lucky Color:</strong>
+                            ${horoscope.color}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('horoscopeResult').innerHTML = result;
+        }
+
+        // Face Reading (Placeholder)
+        function analyzeFace() {
+            const fileInput = document.getElementById('faceImage');
+            
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('Please upload a photo first!');
+                return;
+            }
+
+            const result = `
+                <div class="result-box">
+                    <h3>👤 Face Reading Analysis</h3>
+                    <p><strong>Status:</strong> Feature Coming Soon!</p>
+                    <p>Face Reading analysis will be available in the next update. This feature will provide:</p>
+                    <ul>
+                        <li>Personality insights based on facial features</li>
+                        <li>Career aptitude indicators</li>
+                        <li>Relationship compatibility traits</li>
+                        <li>Health and wellness indicators</li>
+                    </ul>
+                    <p><em>Thank you for your interest. Stay tuned for updates!</em></p>
+                </div>
+            `;
+
+            document.getElementById('faceReadingResult').innerHTML = result;
+        }
+
+        // Initialize chat with welcome message
         window.onload = function() {
-            const welcomeMsg = document.createElement('div');
-            welcomeMsg.className = 'message ai-message';
-            welcomeMsg.textContent = "🙏 Namaste! I'm your AI astrologer. Ask me anything about your cosmic journey—relationships, career, life purpose, or daily guidance. I'm here to illuminate your path! ✨";
-            document.getElementById('chatMessages').appendChild(welcomeMsg);
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message ai-message">
+                    <strong>AI Astrologer:</strong><br>
+                    🙏 Namaste! Welcome to Jyoti Darshan. I am your AI-powered astrological guide. 
+                    Ask me anything about love, career, health, finances, family, education, travel, 
+                    spiritual growth, or your future. How may I assist you on your cosmic journey today?
+                </div>
+            `;
         };
     </script>
 </body>
