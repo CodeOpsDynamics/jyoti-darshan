@@ -151,7 +151,6 @@ jyoti-darshan/
 ├── MRP1_Jyoti_Darshan_Project_Report.docx   # Full research report (27 pages)
 ├── MRP1_Jyoti_Darshan_Presentation.pptx    # 16-slide IIM Ranchi format PPT
 ├── Jyoti_Darshan_feedback.csv         # User feedback data (n=80)
-├── Literature-Review-Notes.txt.rtf    # Literature review notes (12 papers)
 └── screenshots/
     ├── HomePage.png                    # Application homepage
     ├── birthchart_input.png           # Birth chart input form
@@ -224,12 +223,6 @@ IIM Ranchi
 
 📧 Connect on [LinkedIn](https://linkedin.com)
 🔗 Live App: [codeopsdynamics.github.io/jyoti-darshan](https://codeopsdynamics.github.io/jyoti-darshan/)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. The research report and academic deliverables are proprietary to IIM Ranchi MRP-1 submission.
 
 ---
 
