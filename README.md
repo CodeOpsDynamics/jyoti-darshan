@@ -5,7 +5,6 @@
 > An AI-powered Vedic astrology web application offering personalized Birth Chart generation, AI Astrologer Chat, Daily Horoscope, and Face Reading — built for the Indian market.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-7C3AED?style=for-the-badge&logo=github)](https://codeopsdynamics.github.io/jyoti-darshan/)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![IIM Ranchi](https://img.shields.io/badge/MRP--1-IIM%20Ranchi-1B6B2F?style=for-the-badge)](https://iimranchi.ac.in)
 
 ---
